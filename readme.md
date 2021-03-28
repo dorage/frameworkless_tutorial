@@ -91,3 +91,7 @@ state를 수정하고 새로운 render()를 수동으로 호출하는 간단한 
 ## Chapter.03 - 03
 
 모든 event를 생성하였고 각각의 view 컴포넌트에 이벤트를 등록해주었다.
+
+## Chapter.03 - 04
+
+todo리스트의 이벤트를 각 list의 요소마다 등록하지 않고 todo-list에 등록하여 event target을 캐치하여 위임하는 방식으로 진행.
