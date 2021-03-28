@@ -16,11 +16,22 @@ const state = {
     currentFillter: 'All',
 };
 
+const events = {
+    deleteItem: (index) => {
+        state.todos.splice(index, 1);
+        render();
+    },
+    addItem: (text) => {
+        state.todos.push({ text, completed: false });
+        render();
+    },
+};
+
 const render = () => {
     window.requestAnimationFrame(() => {
-        const main = document.querySelector('#root');
-        const newMain = registry.renderRoot(main, state);
-        applyDiff(document.body, main, newMain);
+        const root = document.querySelector('#root');
+        const newRoot = registry.renderRoot(root, state, events);
+        applyDiff(document.body, root, newRoot);
     });
 };
 
