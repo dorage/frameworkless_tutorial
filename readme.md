@@ -3,6 +3,8 @@
 프레임워크 없는 프론트엔드 개발을 따라가는 저장소
 
 🔗 netlify | https://inspiring-galileo-63da51.netlify.app/
+🔗 book | https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=260034588&start=slayer
+🔗 source | https://github.com/Apress/frameworkless-front-end-development
 
 ## Chapter.02 - 02
 
