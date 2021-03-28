@@ -8,24 +8,48 @@ const getTemplate = () => {
     return template.content.firstElementChild.cloneNode(true);
 };
 
-const addEvents = (targetElement, events) => {
+const allTodosCompleted = (todos) => {
+    if (todos.length === 0) {
+        return false;
+    }
+    return !todos.find((t) => !t.completed);
+};
+const noCompletedItemIsPresent = (todos) => !todos.find((t) => t.completed);
+
+const addEvents = (targetElement, { addItem, completeAll, clearCompleted }) => {
     targetElement
         .querySelector('.new-todo')
         .addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                events.addItem(e.target.value);
+                addItem(e.target.value);
                 e.target.value = '';
             }
         });
+    targetElement
+        .querySelector('input.toggle-all')
+        .addEventListener('click', completeAll);
+    targetElement
+        .querySelector('.clear-completed')
+        .addEventListener('click', clearCompleted);
 };
 
 export default (targetElement, state, events) => {
-    const element = targetElement.cloneNode(true);
+    const newApp = targetElement.cloneNode(true);
 
-    element.innerHTML = '';
-    element.appendChild(getTemplate());
+    newApp.innerHTML = '';
+    newApp.appendChild(getTemplate());
 
-    addEvents(element, events);
+    if (noCompletedItemIsPresent(state.todos)) {
+        newApp.querySelector('.clear-completed').classList.add('hidden');
+    } else {
+        newApp.querySelector('.clear-completed').classList.remove('hidden');
+    }
 
-    return element;
+    newApp.querySelector('input.toggle-all').checked = allTodosCompleted(
+        state.todos,
+    );
+
+    addEvents(newApp, events);
+
+    return newApp;
 };

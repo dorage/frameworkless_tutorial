@@ -54,7 +54,7 @@ registry.add('filters', filtersView);
 
 const state = {
     todos: getTodos(),
-    currentFillter: 'All',
+    currentFilter: 'All',
 };
 
 window.requestAnimationFrame(() => {
@@ -87,3 +87,7 @@ applyDiff 함수를 추가하고 기존 노드와 새로운 노드의 변경된 
 ## Chapter.03 - 02
 
 state를 수정하고 새로운 render()를 수동으로 호출하는 간단한 이벤트인 todo추가/삭제 이벤트를 추가하였다.
+
+## Chapter.03 - 03
+
+모든 event를 생성하였고 각각의 view 컴포넌트에 이벤트를 등록해주었다.
