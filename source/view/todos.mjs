@@ -23,12 +23,11 @@ const getTodoElement = (
         element.querySelector('input.toggle').checked = true;
     }
 
-    element
-        .querySelector('button.destroy')
-        .addEventListener('click', (e) => deleteItem(index));
-    element.querySelector('input.toggle').addEventListener('click', (e) => {
-        toggleItemCompleted(index);
-    });
+    element.querySelector('button.destroy').dataset.index = index;
+    element.querySelector('input.toggle').dataset.index = index;
+    element.querySelector('input.edit').dataset.index = index;
+
+    // 이벤트 위임방법을 알아봐야겠다.
     element.addEventListener('dblclick', () => {
         element.classList.add('editing');
         element.querySelector('input.edit').focus();
@@ -39,7 +38,6 @@ const getTodoElement = (
             updateItem(index, e.target.value);
         }
     });
-
     return element;
 };
 
@@ -54,9 +52,9 @@ const filterTodos = (todos, currentFilter) => {
 };
 
 export default (targetElement, { todos, currentFilter }, events) => {
-    const element = targetElement.cloneNode(true);
+    const newTodoList = targetElement.cloneNode(true);
 
-    element.innerHTML = '';
+    newTodoList.innerHTML = '';
 
     console.log(currentFilter);
     const filteredTodos = filterTodos(todos, currentFilter);
@@ -64,8 +62,16 @@ export default (targetElement, { todos, currentFilter }, events) => {
     filteredTodos
         .map((todo, index) => getTodoElement(todo, index, events))
         .forEach((elem) => {
-            element.appendChild(elem);
+            newTodoList.appendChild(elem);
         });
+    newTodoList.addEventListener('click', (e) => {
+        if (e.target.matches('button.destroy')) {
+            events.deleteItem(e.target.dataset.index);
+        }
+        if (e.target.matches('input.toggle')) {
+            events.toggleItemCompleted(e.target.dataset.index);
+        }
+    });
 
-    return element;
+    return newTodoList;
 };
